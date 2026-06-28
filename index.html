@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Escape Game — Village Mystère</title>
+  <link rel="stylesheet" href="css/game.css">
+</head>
+<body>
+
+<!-- ════════════ WELCOME ════════════ -->
+<div id="welcome">
+  <div class="eye">Escape Game</div>
+  <h1 id="welcome-title"></h1>
+  <p class="tag" id="welcome-tag"></p>
+
+  <div class="story" id="welcome-story"></div>
+
+  <div class="name-field">
+    <label>Votre prénom</label>
+    <input type="text" id="player-name-input" placeholder="Entrez votre prénom…" maxlength="30" autocomplete="off"
+           oninput="this.value=this.value.replace(/[^a-zA-ZÀ-ÿ-]/g,'')">
+  </div>
+
+  <div id="cfg-missing" style="display:none;margin-bottom:1.2rem;padding:.7rem 1.1rem;border:1px solid #c9a227;color:#c9a227;font-size:.82rem;max-width:420px;line-height:1.7">
+    ⚠ Aucune configuration trouvée.<br>
+    Ouvre <b>editor.html</b> pour créer les étapes du jeu, puis exporte <b>game_config.json</b> dans ce dossier.
+  </div>
+  <button class="btn" id="btn-resume" style="display:none;margin-bottom:.9rem" onclick="resumeGame()">↩ Reprendre</button>
+  <button class="btn" onclick="startGame()">Débuter l'enquête</button>
+</div>
+
+<!-- ════════════ GAME ════════════════ -->
+<div id="game">
+
+  <div id="hdr">
+    <span class="ttl" id="hdr-ttl">Village Mystère</span>
+    <span id="timer">1:00:00</span>
+    <div class="prog">
+      <span id="phase-badge"></span>
+      <span id="prog-txt">Énigme 1</span>
+      <div class="sdots" id="sdots"></div>
+    </div>
+    <button id="inv-btn" onclick="openInventory()">🎒 <span id="inv-count">0</span></button>
+  </div>
+
+  <div id="pano-vp">
+    <div id="pano-strip">
+      <img class="pano-tile" id="pano-img" src="" alt="" draggable="false">
+    </div>
+
+    <div class="vig vig-t"></div>
+    <div class="vig vig-b"></div>
+    <div class="vig vig-l"></div>
+    <div class="vig vig-r"></div>
+
+    <div id="drag-hint">← Glisser pour explorer →</div>
+    <button id="clue-toggle" onclick="openClue()">💡 Revoir l'indice</button>
+    <button id="vp-hint-btn" onclick="openHintConfirm()">💡 Indice −1 min</button>
+    <div id="minimap"><div id="mm-thumb"></div></div>
+    <div id="zoom-indicator"></div>
+    <button id="zoom-reset-btn" onclick="resetZoom()" title="Réinitialiser le zoom">⊙ ×1</button>
+  </div>
+
+</div>
+
+<!-- ════════════ CODE MODAL — CRYPTEX ════════════ -->
+<div id="code-modal" class="hidden">
+  <div id="cm-timer"></div>
+  <div class="cm-eye" id="cm-lbl">Énigme 1</div>
+  <div class="cm-clue" id="cm-clue-txt"></div>
+  <div class="cryptex-wrap">
+    <div class="cx-endcap left"></div>
+    <div class="cx-rings" id="cx-rings"></div>
+    <div class="cx-endcap right"></div>
+  </div>
+  <button id="cx-validate" onclick="validateCryptex()">✓ Valider</button>
+  <div class="cm-error" id="cm-error"></div>
+  <div id="cm-hint-row">
+    <button onclick="openHintConfirm()">💡 Voir un indice (−1 min)</button>
+  </div>
+</div>
+
+<!-- ════════════ PUZZLE MODAL (taquin) ════════════ -->
+<div id="puzzle-modal" class="hidden">
+  <div id="pm-timer"></div>
+  <div class="cm-eye" id="pm-lbl">Défi puzzle</div>
+  <div class="cm-clue" id="pm-clue-txt"></div>
+  <div id="puzzle-board"></div>
+  <div id="pm-hint-row" style="display:none">
+    <button onclick="openHintConfirm()">💡 Voir un indice (−1 min)</button>
+  </div>
+</div>
+
+<!-- ════════════ T9 MODAL ════════════ -->
+<div id="t9-modal" class="hidden">
+  <div id="t9-timer"></div>
+  <div class="cm-eye" id="t9-lbl">Énigme 1</div>
+  <div class="cm-clue" id="t9-clue-txt"></div>
+  <div class="t9-phone" id="t9-phone">
+    <div class="t9-screen" id="t9-screen"></div>
+    <div class="t9-keys">
+      <div class="t9-key" onclick="t9Press('2')"><span class="t9-num">2</span><span class="t9-abc">A B C</span></div>
+      <div class="t9-key" onclick="t9Press('3')"><span class="t9-num">3</span><span class="t9-abc">D E F</span></div>
+      <div class="t9-key" onclick="t9Press('4')"><span class="t9-num">4</span><span class="t9-abc">G H I</span></div>
+      <div class="t9-key" onclick="t9Press('5')"><span class="t9-num">5</span><span class="t9-abc">J K L</span></div>
+      <div class="t9-key" onclick="t9Press('6')"><span class="t9-num">6</span><span class="t9-abc">M N O</span></div>
+      <div class="t9-key" onclick="t9Press('7')"><span class="t9-num">7</span><span class="t9-abc">P Q R S</span></div>
+      <div class="t9-key" onclick="t9Press('8')"><span class="t9-num">8</span><span class="t9-abc">T U V</span></div>
+      <div class="t9-key" onclick="t9Press('9')"><span class="t9-num">9</span><span class="t9-abc">W X Y Z</span></div>
+      <div class="t9-key t9-del" onclick="t9Back()"><span class="t9-num">⌫</span><span class="t9-abc">suppr</span></div>
+      <div class="t9-key" onclick="t9Press('0')"><span class="t9-num">0</span><span class="t9-abc">espace</span></div>
+      <div class="t9-key t9-ok" onclick="t9Validate()"><span class="t9-num">OK ✓</span><span class="t9-abc">valider</span></div>
+    </div>
+  </div>
+  <div id="t9-error"></div>
+  <div id="t9-hint-row" style="display:none">
+    <button onclick="openHintConfirm()">💡 Voir un indice (−1 min)</button>
+  </div>
+</div>
+
+<!-- ════════════ CLUE POPUP ════════════ -->
+<div id="clue-popup" class="hidden">
+  <div class="cp-head">
+    <span class="cp-lbl" id="clue-lbl">Indice</span>
+    <button onclick="closeClue()">Réduire ↙</button>
+  </div>
+  <div class="cp-body" id="clue-txt"></div>
+  <div id="cp-hint-buy" style="display:none; border-top:1px solid var(--border); text-align:center; padding:.7rem 1.2rem">
+    <button onclick="openHintConfirm()" style="background:transparent; border:1px solid #5cb8e8; color:#5cb8e8; font-size:.75rem; letter-spacing:.1em; text-transform:uppercase; padding:7px 18px; cursor:pointer; touch-action:manipulation">💡 Voir un indice (−1 min)</button>
+  </div>
+  <div id="clue-hint-section" style="display:none">
+    <div style="border-top:1px solid var(--border);margin:0 1.2rem;"></div>
+    <div class="cp-body" style="color:#5cb8e8;padding-top:.8rem">
+      <span style="font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:#5cb8e8;font-style:normal">💡 Indice dévoilé</span>
+      <div id="clue-hint-txt" style="margin-top:.5rem"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ INVENTORY ════════════ -->
+<div id="inv-panel" class="hidden">
+  <div id="inv-list-view">
+    <div class="inv-head">
+      <span class="inv-head-title">🎒 Inventaire</span>
+      <button onclick="closeInventory()">Fermer ✕</button>
+    </div>
+    <div id="inv-list"></div>
+  </div>
+  <div id="inv-detail-view" style="display:none">
+    <div class="inv-head">
+      <button onclick="showInventoryList()">← Retour</button>
+      <span id="inv-detail-title"></span>
+      <button onclick="closeInventory()">✕</button>
+    </div>
+    <div id="inv-detail-body"></div>
+  </div>
+</div>
+
+<!-- ════════════ VICTORY ════════════ -->
+<div id="victory">
+  <div class="eye">Trésor trouvé !</div>
+  <h2>Félicitations, <span id="victory-name"></span> !</h2>
+  <p id="victory-msg">La Plume d'Or été caché à la base de la girouette. Malheureusement, une fois dans les mains vous découvrez que celle-ci n'est pas vraiment en or. Mais ce n'est pas grave, le principal c'est la chasse aux trésors !</p>
+  <p class="v-time">Temps restant : <span id="victory-time"></span></p>
+  <br>
+  <button class="btn" onclick="restartGame()">Recommencer</button>
+</div>
+
+<!-- ════════════ GAME OVER ════════════ -->
+<div id="game-over">
+  <div class="eye">Temps écoulé</div>
+  <h2>Le trésor n'a pas été trouvé</h2>
+  <p>Le temps vous a manqué. Reprenez du début, vous aurez peut-être plus de chance…</p>
+  <button class="btn" onclick="restartGame()">Rejouer</button>
+</div>
+
+<div id="penalty-flash">−1:00</div>
+<div id="toast"></div>
+
+<div id="step-success">
+  <div class="ss-card">
+    <div class="ss-icon">✓</div>
+    <h3>Défi validé</h3>
+    <p id="step-success-txt"></p>
+    <div id="ss-item-found" style="display:none">
+      <div class="ss-item-box">
+        <div class="ss-item-box-icon" id="ss-item-icon">📦</div>
+        <div>
+          <div class="ss-item-box-lbl">Objet trouvé !</div>
+          <div class="ss-item-box-name" id="ss-item-name"></div>
+        </div>
+      </div>
+    </div>
+    <div id="ss-timer"></div>
+    <button class="ss-cta" type="button" onclick="resumeAfterSuccess()">Continuer →</button>
+  </div>
+</div>
+
+<!-- ════════════ HINT CONFIRM ════════════ -->
+<div id="hint-confirm">
+  <div class="hc-box">
+    <div class="hc-icon">💡</div>
+    <p>Consulter un indice vous coûtera<br><strong>−1 minute</strong>.</p>
+    <div class="hc-btns">
+      <button class="hc-btn-ok" onclick="confirmHint()">Oui, voir l'indice</button>
+      <button class="hc-btn-no" onclick="closeHintConfirm()">Annuler</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ HINT POPUP ════════════ -->
+<div id="hint-popup" class="hidden">
+  <div class="hp-head">
+    <span class="hp-lbl">💡 Indice</span>
+    <button onclick="closeHint()">Fermer ✕</button>
+  </div>
+  <div id="hint-img-wrap" style="display:none;padding:.6rem 1.2rem 0;text-align:center">
+    <img id="hint-img" src="" alt="indice" style="max-width:100%;max-height:220px;border-radius:6px;object-fit:contain">
+  </div>
+  <div class="hp-body" id="hint-txt"></div>
+</div>
+
+<!-- ════════════ AIDE FLOTTANTE ════════════ -->
+<button id="aide-btn" onclick="openAide()" title="Énigme &amp; indice" aria-label="Aide">❓</button>
+
+<div id="aide-popup" class="hidden">
+  <div class="aide-head">
+    <span id="aide-lbl-txt" class="aide-lbl">Aide</span>
+    <button onclick="closeAide()">✕ Fermer</button>
+  </div>
+  <div class="aide-body">
+    <div class="aide-section-ttl">🗺 L'ÉNIGME</div>
+    <div id="aide-clue-txt" class="aide-clue-txt"></div>
+    <div id="aide-hint-section"></div>
+  </div>
+</div>
+
+<script src="js/game.js"></script>
+</body>
+</html>

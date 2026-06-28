@@ -1,0 +1,109 @@
+{
+  "title": "A la recherche de la plume d'Or",
+  "subtitle": "Chasse au Trésor dans le charmant village d'Houdan",
+  "intro": "Bonjour toi ! Bienvenu à la chasse au trésor !\n\nIl y a des années, un vieil homme du coin a caché une plume d'or dans Houdan, et a dit, à qui voulait l'entendre, \"personne ne trouvera le trésor\" ! Depuis, des milieurs de personnes ont essayés mais personne n'a réussit.\n\nIl a parsemé des indices partout dans la ville. Fais vite ! De nombreux chasseurs de trésors sont après cette plume.",
+  "duration": 15,
+  "victoryMessage": "",
+  "steps": [
+    {
+      "type": "click",
+      "clue": "Le Seigneur, meilleur archer de la région, avait une pièce favorite lorsque le château était assiégé. \n\nTrouve cet emplacement.",
+      "success": "Bravo ! Les meurtrières étaient de petites ouvertures permettant de tirer à l'arc tout en étant en sécurité. \nVous trouvez un message dans une niche : \n\n\"Ainsi vous avez découvet ma première cachette. La seconde enigme au dos de parchemin vous emmenera à un autre endroit que j'apprécie à Houdan\".",
+      "hint": "Les archers se positionnaient à un endroit bien particulier.",
+      "image": "images/Image1.png",
+      "imageWidth": 1746,
+      "imageHeight": 1078,
+      "zone": {
+        "x": 691,
+        "y": 385,
+        "w": 80,
+        "h": 104
+      }
+    },
+    {
+      "type": "code",
+      "clue": "Il faut bien débuter quelque part. \n\nTu as entre tes mains à parchemin. Si tu déchiffres le code tu sauras où chercher le 1er indice.. \n\n\"C'était la maison du Seigneur de Houdan\"",
+      "success": "Bravo ! Effectivement le Donjon servait initialement de Tour maîtresse habitable avant de servir de prison puis de château d'eau ! Restauré récemment il est aujourd'hui visitable. Retourne ce message pour voir le prochain indice !",
+      "hint": "Bâtiment principal d'un Château Fort",
+      "code": "DONJON"
+    },
+    {
+      "type": "t9",
+      "clue": "test",
+      "success": "",
+      "code": "TEST",
+      "item": {
+        "name": "Code Morse",
+        "text": "Test",
+        "image": "images/morsecode-1.webp"
+      }
+    },
+    {
+      "type": "code",
+      "clue": "5 - 7 - 12 - 9 - 19 - 5",
+      "success": "Bien jouer, rend toi devant l'église et cherche le symbôle de ma maison.",
+      "hint": "Le \"M\" est le \"13\"",
+      "code": "EGLISE"
+    },
+    {
+      "type": "click",
+      "clue": "Cherche le symbole des seigneurs de Houdan",
+      "success": "Bravo ! Les blasons étaient en effet le symbôle des grandes familles nobles. \n\nEn t'approchant de près pour voir le blason du seigneur d'Houdan, tu vois un parchemin glissé entre les pierres de la façade de l'église.\n\nSi tu as l'occasion de venir, un magnifique orgue est visible à l'intérieur de cette magnifique église.\n\nLis vite la prochaine enigme pour te rapprocher de la Plume d'or.",
+      "hint": "Celui de Houdan est \"Parti: au 1er mi-parti d'azur à trois fleurs de lis d'or; au 2e d'argent à trois mouchetures d'hermine de sable\"",
+      "image": "images/Image2.png",
+      "imageWidth": 1314,
+      "imageHeight": 1084,
+      "zone": {
+        "x": 514,
+        "y": 740,
+        "w": 230,
+        "h": 17
+      }
+    },
+    {
+      "type": "puzzle",
+      "clue": "",
+      "success": "Bravo ! Le prochain indice est bien à la Mairie d'Houdan",
+      "image": "images/Image4.png",
+      "imageWidth": 1095,
+      "imageHeight": 826
+    },
+    {
+      "type": "click",
+      "clue": "1    1 1    1\n1 1 0 1 1 1\n1 1 1 1 1 1",
+      "success": "Bien joué ! en te promenant des les bureaux de la mairie tu découvre un nouvel indice. Tu te rapproche du trésor c'est sûr !",
+      "hint": "Il y a beaucoup de fenêtres sur ce bâtiment.",
+      "image": "images/Image4.png",
+      "imageWidth": 1095,
+      "imageHeight": 826,
+      "zone": {
+        "x": 435,
+        "y": 340,
+        "w": 127,
+        "h": 171
+      }
+    },
+    {
+      "type": "t9",
+      "clue": "Ceinture minérale d'une cité, je suis l'ultime parole de pierre entre la ville et l'assaut. On ne m'érige plus, mais l'on me longe encore. Mon nom ?",
+      "success": "Bien joué ! Direction les remparts d'Houdan !",
+      "hint": "entoure généralement une ville médiévale",
+      "code": "REMPARTS"
+    },
+    {
+      "type": "click",
+      "clue": "Nous voici aux rermpart et plus précisément devant la Tour Guinant.\n\nCherche l'ami d'Eole",
+      "success": "Bien jouer !",
+      "hint": "Eole est le dieu Grec du vent",
+      "image": "images/image5.png",
+      "imageWidth": 726,
+      "imageHeight": 907,
+      "zone": {
+        "x": 309,
+        "y": 90,
+        "w": 74,
+        "h": 101
+      }
+    }
+  ]
+}
