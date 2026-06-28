@@ -6,6 +6,13 @@
   "victoryMessage": "",
   "steps": [
     {
+      "type": "code",
+      "clue": "Il faut bien débuter quelque part. \n\nTu as entre tes mains à parchemin. Si tu déchiffres le code tu sauras où chercher le 1er indice.. \n\n\"C'était la maison du Seigneur de Houdan\"",
+      "success": "Bravo ! Effectivement le Donjon servait initialement de Tour maîtresse habitable avant de servir de prison puis de château d'eau ! Restauré récemment il est aujourd'hui visitable. Retourne ce message pour voir le prochain indice !",
+      "hint": "Bâtiment principal d'un Château Fort",
+      "code": "DONJON"
+    },
+    {
       "type": "click",
       "clue": "Le Seigneur, meilleur archer de la région, avait une pièce favorite lorsque le château était assiégé. \n\nTrouve cet emplacement.",
       "success": "Bravo ! Les meurtrières étaient de petites ouvertures permettant de tirer à l'arc tout en étant en sécurité. \nVous trouvez un message dans une niche : \n\n\"Ainsi vous avez découvet ma première cachette. La seconde enigme au dos de parchemin vous emmenera à un autre endroit que j'apprécie à Houdan\".",
@@ -18,24 +25,6 @@
         "y": 385,
         "w": 80,
         "h": 104
-      }
-    },
-    {
-      "type": "code",
-      "clue": "Il faut bien débuter quelque part. \n\nTu as entre tes mains à parchemin. Si tu déchiffres le code tu sauras où chercher le 1er indice.. \n\n\"C'était la maison du Seigneur de Houdan\"",
-      "success": "Bravo ! Effectivement le Donjon servait initialement de Tour maîtresse habitable avant de servir de prison puis de château d'eau ! Restauré récemment il est aujourd'hui visitable. Retourne ce message pour voir le prochain indice !",
-      "hint": "Bâtiment principal d'un Château Fort",
-      "code": "DONJON"
-    },
-    {
-      "type": "t9",
-      "clue": "test",
-      "success": "",
-      "code": "TEST",
-      "item": {
-        "name": "Code Morse",
-        "text": "Test",
-        "image": "images/morsecode-1.webp"
       }
     },
     {
@@ -54,10 +43,10 @@
       "imageWidth": 1314,
       "imageHeight": 1084,
       "zone": {
-        "x": 514,
-        "y": 740,
-        "w": 230,
-        "h": 17
+        "x": 545,
+        "y": 247,
+        "w": 210,
+        "h": 182
       }
     },
     {
