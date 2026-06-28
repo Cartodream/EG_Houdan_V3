@@ -688,7 +688,6 @@
       transition: transform .12s, box-shadow .12s;
     }
     #aide-btn:active { transform: scale(.9); box-shadow: 0 2px 8px rgba(201,162,39,.3); }
-    #aide-btn.visible { display: flex; }
 
     #aide-popup {
       position: fixed; bottom: 0; left: 0; right: 0; z-index: 150;
@@ -836,7 +835,8 @@
       #t9-hint-row { display: none !important; }
       #cp-hint-buy { display: none !important; }
 
-      /* Aide btn — remonter au-dessus de la nav iOS */
+      /* Aide btn — visible uniquement mobile */
+      #aide-btn.visible { display: flex; }
       #aide-btn { bottom: 28px; right: 16px; width: 58px; height: 58px; font-size: 1.6rem; }
 
       /* Hint popup — remonte depuis le bas */
